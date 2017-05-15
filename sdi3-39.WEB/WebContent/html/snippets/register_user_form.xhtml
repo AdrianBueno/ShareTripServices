@@ -1,0 +1,91 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<p:fieldset 
+		legend="#{msgs.fieldset_register}"
+		style="text-align: center; width:460px;margin-top:30px; margin: 0 auto;">
+		<h:form id="register_user_form">
+			<h:panelGrid columns="2">
+				<h:outputLabel 
+					for="registerlogin" 
+					value="#{msgs.label_registerlogin}" />
+				<p:inputText 
+					id="registerlogin" 
+					value="#{beanRegister.newUser.login}"
+					placeholder="#{msgs.input_registerlogin}"
+					required="true" 
+					requiredMessage="#{msgs.required_registerlogin}"
+					label="registerlogin">
+				</p:inputText>
+				<h:outputLabel 
+					for="registername" 
+					value="#{msgs.label_registername}" />
+				<p:inputText 
+					id="registername" 
+					value="#{beanRegister.newUser.name}"
+					placeholder="#{msgs.input_registername}"
+					required="true" 
+					requiredMessage="#{msgs.required_registername}"
+					label="registername">
+				</p:inputText>
+
+				<h:outputLabel for="registersurname"
+					value="#{msgs.label_registersurname}" />
+				<p:inputText 
+					id="registersurname" 
+					value="#{beanRegister.newUser.surname}"
+					placeholder="#{msgs.input_registersurname}"
+					required="true"
+					requiredMessage="#{msgs.required_registersurname}"
+					label="usersurname">
+				</p:inputText>
+
+				<h:outputLabel 
+				for="registeremail" 
+				value="#{msgs.label_registeremail}" />
+				<p:inputText 
+					id="registeremail" 
+					value="#{beanRegister.newUser.email}"
+					placeholder="#{msgs.input_registeremail}"
+					required="true" 
+					requiredMessage="#{msgs.required_registeremail}"
+					label="registeremail">
+				</p:inputText>
+
+				<h:outputLabel 
+					for="registerpass1" 
+					value="#{msgs.label_registerpass1}" />
+				<p:password 
+					id="registerpass1" 
+					value="#{beanRegister.pass1}"
+					placeholder="#{msgs.input_registerpass1}"
+					required="true" 
+					requiredMessage="#{msgs.required_registerpass1}"
+					label="registerpass1" />
+
+				<h:outputLabel 
+					for="registerpass2" 
+					value="#{msgs.label_registerpass2}" />
+				<p:password 
+					id="registerpass2" 
+					value="#{beanRegister.pass2}"
+					placeholder="#{msgs.input_registerpass2}"
+					required="true" 
+					requiredMessage="#{msgs.required_registerpass2}"
+					label="registerpass2">
+					<f:validator validatorId="vPasswordEqual" />
+				</p:password>
+
+			</h:panelGrid>
+			<h:panelGrid columns="1">
+				<h:commandButton 
+					id="buttonregister"
+					value="#{msgs.button_register}" 
+					action="#{beanRegister.register}" />
+			</h:panelGrid>
+
+		</h:form>
+	</p:fieldset>
+</ui:composition>

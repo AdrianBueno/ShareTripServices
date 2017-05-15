@@ -1,0 +1,265 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="viewtrips_form">
+		<p:dataTable id="dataTableTrips" value="#{beanTrips.trips}" var="trip"
+			selection="#{beanTrips.selectedTrips}" rowKey="#{trip.id}"
+			filteredValue="#{beanTrips.filteredTrips}"
+			sortMode="multiple"
+			sortOrder="#{trip.departureDate}"
+			paginator="true" rows="12" rowsPerPageTemplate="12,18" 
+			paginatorTemplate=" {PreviousPageLink} {PageLinks} {NextPageLink} {RowsPerPageDropdown} {CurrentPageReport}"
+			rowStyleClass="#{trip.status == 'DONE' ? 'closed' : null}" 
+			style="width: 1360px; margin: 0 auto;" binding="#{beanTrips.dataTable}">
+			<p:row>
+				things
+			</p:row>
+			<p:column 	selectionMode="multiple"
+						rendered="#{beanSession.isSessionInit()}"	    
+						style="width:16px;text-align:center">
+				<p:rowToggler  id="rowToogler" rendered="#{beanSession.isSessionInit()}">
+			
+				</p:rowToggler>
+			</p:column>
+			<p:column 	headerText="#{msgs.column_promoter}"
+						filterBy="#{trip.user.name}"
+						sortBy="#{trip.user.name}" 
+						rendered="#{beanSession.isSessionInit()}">
+				<h:outputText value="#{trip.user.name}" />
+			</p:column>
+			<p:column  	headerText="#{msgs.column_date_dep}"
+						filterBy="#{trip.departureDate}"
+						sortBy="#{trip.departureDate}">
+				<h:outputText value="#{trip.getFechaSalida()}" style="float: right;"/>
+			</p:column>
+			<p:column 	headerText="#{msgs.column_city_dep}"
+						filterBy="#{trip.departureAddress.city}"
+						sortBy="#{trip.departureAddress.city}">
+				<h:outputText value="#{trip.departureAddress.city}" style="float: left;" />
+			</p:column>
+			<p:column  	headerText="#{msgs.column_date_des}"
+						filterBy="#{trip.arrivalDate}"
+						sortBy="#{trip.arrivalDate}">
+				<h:outputText value="#{trip.getFechaLlegada()}" style="float: right;" />
+			</p:column>
+			<p:column 	headerText="#{msgs.column_city_des}"
+						filterBy="#{trip.destinationAddress.city}"
+						sortBy="#{trip.destinationAddress.city}">
+				<h:outputText value="#{trip.destinationAddress.city}" style="float: left;" />
+			</p:column>
+			<p:column 	headerText="#{msgs.column_places}">
+				<h:outputText value="#{msgs.label_estimatedcost} #{trip.estimatedCost} €" />
+				<br/>
+				<h:outputText value="#{msgs.label_availablepax} #{trip.availablePax}" />				
+			</p:column>
+			<p:column 	headerText="#{msgs.column_trip_status}" 
+						rendered="#{beanTrips.typeTrip == 2 || beanTrips.typeTrip == 5}">
+				<h:outputText value="#{msgs.column_trip_status}: #{trip.status}" />
+				<br/>
+				<h:outputText value="#{msgs.label_number_applies} #{trip.getNumberApplies()}" />
+			</p:column>
+			<p:column 	headerText="#{msgs.column_apply_status}" 
+						rendered="#{beanTrips.typeTrip == 5}">
+					<h:outputText value="#{trip.applyState}" />
+			</p:column>
+			<p:rowExpansion rendered="#{beanSession.isSessionInit()}" >
+				<p:panelGrid>
+					<f:facet name="header">
+						<p:row>
+							<p:column colspan="26">Details</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="4">
+								<h:outputText value="#{msg.column_control}"/>
+							</p:column>
+							<p:column colspan="3"></p:column>
+							<p:column colspan="5">
+								<h:outputText value="#{msg.column_data}"/>
+							</p:column>
+							<p:column colspan="2"></p:column>
+							<p:column colspan="2"></p:column>
+							<p:column colspan="5"><h:outputText value="#{msgs.column_departure}"/></p:column>
+							<p:column colspan="5"><h:outputText value="#{msgs.column_destination}"/></p:column>
+						</p:row>
+					</f:facet>
+					<p:row>
+						<p:column colspan="4" rowspan="7" >
+							<p:panel columns="1" style="width: 10em;">
+								<p:commandButton id="buttonrequestplace"
+										value="#{msgs.button_requestplace}"
+										action="#{beanSeat.requestPlace()}"
+										rendered="#{beanTrips.typeTrip == 1}"
+										process="@this :viewtrips_form"
+										style="width: 8em; margin: auto; display:block" >
+									<f:setPropertyActionListener target="#{beanTrip.selectedTrip}"
+										value="#{trip}" />
+								</p:commandButton>
+								<p:commandButton id="buttonviewapplies"  
+										action="seats"
+										value="#{msgs.button_viewapplicants}"
+										rendered="#{trip.isModificable() and beanTrips.typeTrip == 2 || (beanTrips.typeTrip == 5 and trip.applyState == 'Promotor' )}"
+										ajax="false"
+										style="width: 8em;"  >
+									<f:setPropertyActionListener 
+										target="#{beanTrip.selectedTrip}" 
+										value="#{trip}"/>
+								</p:commandButton>
+								<p:commandButton 
+										id="buttonedit"
+										action="trip"
+										actionListener="#{beanTrip.setEditMode()}"
+										value="#{msgs.button_edittrip}" 
+										rendered="#{trip.isModificable() and beanTrips.typeTrip == 2 || (beanTrips.typeTrip == 5 and trip.applyState == 'Promotor' ) }"
+										ajax="false"
+										style="width: 8em;" >
+									<f:setPropertyActionListener 
+										target="#{beanTrip.selectedTrip}" 
+										value="#{trip}"/>
+									<f:setPropertyActionListener target="#{beanTrip.actionTrip}" value="2"/>
+								</p:commandButton>
+								<p:commandButton
+										action="#{beanSeat.cancelPlace()}" 
+										id="buttoncancelplace"
+										value="#{msgs.button_cancel_place}"
+										rendered="#{trip.isModificable() and beanTrips.typeTrip == 5 and trip.applyState == 'PENDING'}"
+										ajax="false">
+										<f:setPropertyActionListener 
+											target="#{beanTrip.selectedTrip}" 
+											value="#{trip}"/>
+								</p:commandButton>
+							</p:panel>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText value="#{msgs.column_promoter}" />
+						</p:column>
+						<p:column colspan="5">
+							<h:outputText value="#{trip.user.name}" />
+						</p:column>
+						<p:column colspan="2" rowspan="6">
+							<p:spacer height="0"/>
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText value="#{msgs.label_date}" />
+						</p:column>
+						<p:column colspan="5">
+							<h:outputText value="#{trip.departureDate}" />
+						</p:column>
+						<p:column colspan="5">
+							<h:outputText value="#{trip.arrivalDate}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText value="#{msgs.label_closingdate}" />
+						</p:column>
+						<p:column colspan="5">
+							<h:outputText value="#{trip.closingDate}" />
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText value="#{msgs.label_country}"/>
+						</p:column>
+						<p:column colspan="5">
+							<h:outputText value="#{trip.departureAddress.country}" />
+						</p:column>
+						<p:column colspan="5">
+							<h:outputText value="#{trip.destinationAddress.country}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText value="#{msgs.label_maxpax}" />
+						</p:column>
+						<p:column colspan="5">
+							<h:outputText value="#{trip.maxPax}" />
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText value="#{msgs.label_state}"/>
+						</p:column>
+						<p:column colspan="5">
+							<h:outputText value="#{trip.departureAddress.state}" />
+						</p:column>
+						<p:column colspan="5">
+							<h:outputText value="#{trip.destinationAddress.state}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText value="#{msgs.label_availablepax}" />
+						</p:column>
+						<p:column colspan="5">
+							<h:outputText value="#{trip.availablePax}" />
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText value="#{msgs.label_city}"/>
+						</p:column>
+						<p:column colspan="5">
+							<h:outputText value="#{trip.departureAddress.city}" />
+						</p:column>
+						<p:column colspan="5">
+							<h:outputText value="#{trip.destinationAddress.city}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText value="#{msgs.label_estimatedcost}" />
+						</p:column>
+						<p:column colspan="5">
+							<h:outputText value="#{trip.estimatedCost}" />
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText value="#{msgs.label_address}"/>
+						</p:column>
+						<p:column colspan="5">
+							<h:outputText value="#{trip.departureAddress.address}" />
+						</p:column>
+						<p:column colspan="5">
+							<h:outputText value="#{trip.destinationAddress.address}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+						</p:column>
+						<p:column colspan="5">			
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText value="#{msgs.label_zipcode}"/>
+						</p:column>
+						<p:column colspan="5">
+							<h:outputText value="#{trip.departureAddress.zipCode}" />
+						</p:column>
+						<p:column colspan="5">
+							<h:outputText value="#{trip.destinationAddress.zipCode}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="2">
+							<h:outputText value="#{msgs.label_comments}"/>
+						</p:column>
+						<p:column colspan="24" rowspan="2">
+							<h:outputText value="#{trip.comments}" />	
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="26">
+							
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:rowExpansion>
+			<f:facet name="footer">
+				<p:commandButton
+					id="buttoncanceltrip" 
+					value="Cancel" 
+					icon="fa fa-fw fa-remove"
+					ajax="false"
+					rendered="#{beanTrips.typeTrip == 2 and beanSession.sessionInit}"
+					action="#{beanTrips.cancelTrips()}" />
+			</f:facet>
+		</p:dataTable>
+	</h:form>
+</ui:composition>

@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/html/templates/general.xhtml">
+		<ui:define name="body">
+			<f:metadata>
+				<f:event listener="#{beanSeats.updateSeats()}" type="preRenderView"/>
+			</f:metadata>
+			<h:form id="viewseats_fom">			
+				<p:dataTable 
+						id="tableSeats" value="#{beanSeats.seats}" var="seat"
+						style="width: 1360px; margin: 0 auto;" binding="#{beanSeats.dataTable}"
+						rendered="#{beanSession.sessionInit}">
+				 <f:facet name="header">
+				 		<p:column headerText="#{msgs.column_promoter}" colspan="2">
+				 			<h:outputText value="#{beanTrip.selectedTrip.user.name}" />
+				 		</p:column>
+						<p:column  	headerText="#{msgs.column_date_dep}"
+									colspan="1">
+							<h:outputText 
+								value="#{beanTrip.selectedTrip.getFechaSalida()}" 
+								style="float: right;"/>
+						</p:column>
+						<p:column 	headerText="#{msgs.column_city_dep}"
+									colspan="1">
+							<h:outputText 
+								value="#{beanTrip.selectedTrip.departureAddress.city}" 
+								style="float: left;" />
+						</p:column>
+						<p:column  	headerText="#{msgs.column_date_des}"
+									colspan="1">
+							<h:outputText 
+								value="#{beanTrip.selectedTrip.getFechaLlegada()}" 
+								style="float: right;" />
+						</p:column>
+						<p:column 	headerText="#{msgs.column_city_des}"
+									colspan="1">
+							<h:outputText 
+								value="#{beanTrip.selectedTrip.destinationAddress.city}" 
+								style="float: left;" />
+						</p:column>
+			
+						<p:column headerText="#{msgs.column_places}">
+							<h:outputText 
+								value="#{msgs.label_estimatedcost} #{beanTrip.selectedTrip.estimatedCost} €" />
+							<br/>
+							<h:outputText 
+								value="#{msgs.label_availablepax} #{beanTrip.selectedTrip.availablePax}" />				
+						</p:column>
+				</f:facet>
+				 		<p:column sortBy="#{seat.user.name}"
+				 				colspan="4" 
+				 				headerText="#{msgs.column_applicantname}">
+							<h:outputText value="#{seat.user.name}" />
+						</p:column>
+						<p:column 
+								colspan="6" 
+								headerText="#{msgs.column_applicantsurname}">
+							<h:outputText value="#{seat.user.surname}" />
+						</p:column>
+						<p:column 
+								colspan="6" 
+								headerText="#{msgs.column_applicantemail}">
+							<h:outputText value="#{seat.user.email}" />
+						</p:column>
+						<p:column sortBy="#{seat.getStatus()}"
+								colspan="3" 
+								headerText="Estado">
+							<h:outputText value="#{seat.getStatus()}" />
+						</p:column>
+						<p:column 
+								colspan="4" 
+								rendered="#{beanTrip.selectedTrip.existPlace()}">
+							<p:commandButton value="#{msgs.button_accept_place}"
+								id="buttonacceptseat" 
+								action="#{beanSeat.acceptPlace()}"
+								ajax="false"
+								rendered="#{seat.isPosibleAccept()}">
+								<f:setPropertyActionListener 
+									target="#{beanUser.selectedUser}" 
+									value="#{seat.user}" />
+							</p:commandButton>
+							<p:commandButton value="#{msgs.button_cancel_place}"
+								id="buttoncancelseat"
+								ajax="false" 
+								action="#{beanSeat.excludePlace()}"
+								rendered="#{seat.isPosibleCancel()}">
+								<f:setPropertyActionListener 
+									target="#{beanUser.selectedUser}" 
+									value="#{seat.user}" />
+							</p:commandButton>
+						</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>

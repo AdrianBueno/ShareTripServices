@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd"
+	version="2.0">
+
+
+
+	<!-- User -->
+	<named-query name="User.findAll">
+		<query>
+			select u
+			from User u
+		</query>
+	</named-query>
+
+	<named-query name="User.findByLogin">
+		<query>
+			select u
+			from User u
+			where u.login like ?1
+		</query>
+	</named-query>
+
+	<named-query name="User.findByEmail">
+		<query>
+			select u
+			from User u
+			where u.email like ?1
+		</query>
+	</named-query>
+
+
+	<named-query name="User.findApplicants">
+		<query>
+			select a.applicants
+			from Application a
+			where a.appliedtrips = ?1
+		</query>
+	</named-query>
+
+	<named-query name="User.findPending">
+		<query>
+			select s.user
+			from Seat s
+			where s.trip = ?1
+			and s.status = com.sdi.infrastructure.model.types.TravelStatus.PENDING
+		</query>
+	</named-query>
+
+	<!-- Trip -->
+	<named-query name="Trip.findAll">
+		<query>
+			select t
+			from Trip t
+		</query>
+	</named-query>
+	<named-query name="Trip.findAllAvailable">
+		<query>
+			select t
+			from Trip t
+			where t.status = com.sdi.infrastructure.model.types.TripStatus.OPEN
+			and t.availablePax > 0
+		</query>
+	</named-query>
+	<named-query name="Trip.findAvailable">
+		<query>
+			select t
+			from Trip t
+			where t.status = com.sdi.infrastructure.model.types.TripStatus.OPEN
+			and t.availablePax > 0
+			and NOT (t.user  = ?1)
+		</query>
+	</named-query>
+	<named-query name="Trip.findByStatus">
+		<query>
+			select t
+			from Trip t
+			where t.status = ?1
+		</query>
+	</named-query>
+	<named-query name="Trip.findByPromoter">
+		<query>
+			select t
+			from Trip t
+			where t.user = ?1
+		</query>
+	</named-query>
+	<named-query name="Trip.findDone">
+		<query>
+			select s.trip
+			from Seat s
+			where s.trip.user = ?1
+			and s.trip.status = ?2
+		</query>
+	</named-query>
+
+	<named-query name="Trip.findApply">
+		<query>
+			select a.appliedtrips
+			from Application a
+			where a.applicants = ?1
+		</query>
+	</named-query>
+
+	<named-query name="Trip.findAccepted">
+		<query>
+			select s.trip
+			from Seat s
+			where s.status = com.sdi.infrastructure.model.types.TravelStatus.ACCEPTED
+			and s.user = ?1
+		</query>
+	</named-query>
+
+	<named-query name="Trip.findEqual">
+		<query>
+			select t
+			from Trip t
+			where t.user = ?1
+			and t.arrivalDate = ?2
+			
+		</query>
+	</named-query>
+
+	<named-query name="Trip.findByUserAndStatus">
+		<query>
+			select t
+			from Trip t
+			where t.user = ?1
+			and t.status = ?2
+		</query>
+	</named-query>
+
+	<!-- Application -->
+
+	<named-query name="Application.findApply">
+		<query>
+			select a
+			from Application a
+			where a.appliedtrips = ?1
+			and a.applicants = ?2
+		</query>
+	</named-query>
+
+	<named-query name="Application.findAll">
+		<query>
+			select a
+			from Application a
+		</query>
+	</named-query>
+
+	<!-- Seats -->
+	<named-query name="Seat.findSeat">
+		<query>
+			select s
+			from Seat s
+			where s.trip = ?1
+			and s.user = ?2
+		</query>
+	</named-query>
+
+	<named-query name="Seat.findAll">
+		<query>
+			select s
+			from Seat s
+		</query>
+	</named-query>
+
+	<named-query name="Seat.findAccepted">
+		<query>
+			select s
+			from Seat s
+			where s.trip = ?1
+			and s.status = com.sdi.infrastructure.model.types.TravelStatus.ACCEPTED
+		</query>
+	</named-query>
+
+	<!-- Rating -->
+	<named-query name="Rating.findAll">
+		<query>
+			select r
+			from Rating r
+		</query>
+	</named-query>
+
+	<named-query name="Rating.findRatingsBetweenDates">
+		<query>
+			select r
+			from Rating r
+			where r.aboutSeat.trip.arrivalDate between :startDate and :finishDate
+			 and r.aboutSeat.trip.status = com.sdi.infrastructure.model.types.TripStatus.DONE
+			order by r.aboutSeat.trip.arrivalDate DESC
+		</query>
+	</named-query>
+
+</entity-mappings>

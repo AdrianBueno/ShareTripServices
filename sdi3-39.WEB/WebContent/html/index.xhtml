@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/html/templates/general.xhtml">
+	
+	<ui:define name="body">
+		<p:panel style=" width: 1200px; margin: 0 auto;">
+			<h:panelGrid columns="2" style="padding: 20px">
+				<p:panel header="#{msgs.panel_login}" style="width: 500px; margin: 20px;  ">
+					<ui:include src="/html/snippets/login_form.xhtml" />
+				</p:panel>
+				<p:panel header="#{msgs.panel_register}" style="width: 600px margin: 20px;">
+					<ui:include src="/html/snippets/register_user_form.xhtml" />
+				</p:panel>
+			</h:panelGrid>
+			<p:panel>
+				<p:messages id="indexMessages" showDetail="true"  closable="true"  severity="error" />
+			</p:panel>
+		</p:panel>
+	</ui:define>
+</ui:composition>

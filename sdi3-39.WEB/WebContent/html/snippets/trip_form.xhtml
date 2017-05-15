@@ -1,0 +1,233 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<!-- <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" /> -->
+	<h:panelGrid columns="3" cellpadding="5">
+		<p:fieldset legend="#{msgs.fieldset_departure}"
+			style="margin-bottom:20px">
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputLabel 
+					for="departureaddress"
+					value="#{msgs.label_address}" />
+				<p:inputText 
+					id="departureaddress"
+					value="#{beanTrip.selectedTrip.departureAddress.address}"
+					placeholder="#{msgs.input_address}" 
+					required="true"
+					requiredMessage="#{msgs.required_address}" />
+
+				<h:outputLabel for="departurecity"
+					value="#{msgs.label_city}" />
+				<p:autoComplete id="departurecity" 
+					value="#{beanTrip.selectedTrip.departureAddress.city}" 
+					completeMethod="#{beanAutocomplete.filterCityQuery}"
+					maxResults="20" placeholder="#{msgs.input_city}"
+					requiredMessage="#{msgs.required_city}"
+					required="true" />
+					
+				<h:outputLabel for="departurestate"
+					value="#{msgs.label_state}" />
+				<p:autoComplete id="departurestate"
+					value="#{beanTrip.selectedTrip.departureAddress.state}" 
+					placeholder="#{msgs.input_state}"
+					completeMethod="#{beanAutocomplete.filterStateQuery}"
+					maxResults="20"
+					requiredMessage="#{msgs.required_state}"
+					required="true" />
+
+				<h:outputLabel for="departurecountry"
+					value="#{msgs.label_country}" />
+				<p:autoComplete id="departurecountry"
+					value="#{beanTrip.selectedTrip.departureAddress.country}"
+					placeholder="#{msgs.input_country}"
+					completeMethod="#{beanAutocomplete.filterCountryQuery}"
+					maxResults="20"
+					requiredMessage="#{msgs.required_country}"
+					required="true" />
+
+				<h:outputLabel for="departurezipcode"
+					value="#{msgs.label_zipcode}" />
+				<p:inputText id="departurezipcode"
+					value="#{beanTrip.selectedTrip.departureAddress.zipCode}" 
+					placeholder="#{msgs.input_zipcode}"
+					requiredMessage="#{msgs.required_zipcode}"
+					required="true" />
+
+				<h:outputLabel for="departuredate"
+					value="#{msgs.label_departuredate}"  />
+				<p:calendar id="departuredate"
+					value="#{beanTrip.selectedTrip.departureDate}"
+					required="true"
+					requiredMessage="#{msgs.required_departuredate}"
+					pattern="dd/MM/yyyy HH:mm" />
+
+			</h:panelGrid>
+				<p:fieldset legend="#{msgs.fieldset_waypoint}"
+					style="margin-bottom:20px">
+					<h:panelGrid columns="2">
+						<h:outputLabel for="departurewaypointlat"
+							value="#{label_waypointlat}" />
+						<p:inputText id="departurewaypointlat"
+							value="#{beanTrip.selectedTrip.departureAddress.waypoint.wptLat}"
+							placeholder="#{msgs.input_waypointlat}"  />
+
+						<h:outputLabel for="departurewaypointlon"
+							value="#{msgs.label_waypointlon}" />
+						<p:inputText id="departurewaypointlon"
+							value="#{beanTrip.selectedTrip.departureAddress.waypoint.wptLon}"
+							placeholder="#{msgs.input_waypointlon}" />
+					</h:panelGrid>
+				</p:fieldset>
+			
+		</p:fieldset>
+		<p:fieldset legend="#{msgs.fieldset_destination}"
+			style="margin-bottom:20px">
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputLabel 
+					for="destinationaddress"
+					value="#{msgs.label_address}" />
+				<p:inputText 
+					id="destinationaddress"
+					value="#{beanTrip.selectedTrip.destinationAddress.address}"
+					placeholder="#{msgs.input_address}" 
+					required="true"
+					requiredMessage="#{msgs.required_address}" />
+
+				<h:outputLabel for="destinationcity"
+					value="#{msgs.label_city}" />
+				<p:autoComplete id="destinationcity"
+					value="#{beanTrip.selectedTrip.destinationAddress.city}"
+					placeholder="#{msgs.input_city}"
+					completeMethod="#{beanAutocomplete.filterCityQuery}"
+					maxResults="20"
+					requiredMessage="#{msgs.required_city}"
+					required="true" />
+
+				<h:outputLabel for="destinationstate"
+					value="#{msgs.label_state}" />
+				<p:autoComplete id="destinationstate"
+					value="#{beanTrip.selectedTrip.destinationAddress.state}" 
+					placeholder="#{msgs.input_state}"
+					completeMethod="#{beanAutocomplete.filterStateQuery}"
+					maxResults="20"
+					requiredMessage="#{msgs.required_state}"
+					required="true" />
+
+				<h:outputLabel for="destinationcountry"
+					value="#{msgs.label_country}" />
+				<p:autoComplete id="destinationcountry"
+					value="#{beanTrip.selectedTrip.destinationAddress.country}"
+					placeholder="#{msgs.input_country}"
+					completeMethod="#{beanAutocomplete.filterCountryQuery}"
+					maxResults="20"
+					requiredMessage="#{msgs.required_country}"
+					required="true" />
+
+				<h:outputLabel for="destinationzipcode"
+					value="#{msgs.label_zipcode}" />
+				<p:inputText id="destinationzipcode"
+					value="#{beanTrip.selectedTrip.destinationAddress.zipCode}" 
+					placeholder="#{msgs.input_zipcode}"
+					requiredMessage="#{msgs.required_zipcode}"
+					required="true" />
+
+				<h:outputLabel for="destinationdate"
+					value="#{msgs.label_arrivaldate}"  />
+				<p:calendar id="destinationdate"
+					value="#{beanTrip.selectedTrip.arrivalDate}"
+					required="true"
+					requiredMessage="#{msgs.required_arrivaldate}"
+					pattern="dd/MM/yyyy HH:mm" />
+				
+				
+			</h:panelGrid>
+				<p:fieldset legend="#{msgs.fieldset_waypoint}"
+					style="margin-bottom:20px">
+					<h:panelGrid columns="2">
+						<h:outputLabel for="destinationwaypointlat"
+							value="#{msgs.label_waypointlat}" />
+						<p:inputText id="destinationwaypointlat"
+							value="#{beanTrip.selectedTrip.destinationAddress.waypoint.wptLat}"
+							placeholder="#{msgs.input_waypointlat}" />
+						<h:outputLabel for="destinationwaypointlon"
+							value="#{msgs.label_waypointlon}" />
+						<p:inputText id="destinationwaypointlon"
+							value="#{beanTrip.selectedTrip.destinationAddress.waypoint.wptLon}"
+							placeholder="#{msgs.input_waypointlon}" />
+					</h:panelGrid>
+				</p:fieldset>
+		</p:fieldset>
+		<p:fieldset legend="#{msgs.fieldset_detail}">
+			<h:panelGrid columns="2">		
+				<h:outputLabel 
+					for="estimatedcost" 
+					value="#{msgs.label_estimatedcost}" />
+				<p:inputText id="estimatedcost"
+				value="#{beanTrip.selectedTrip.estimatedCost}"
+				placeholder="#{msgs.input_estimatedcost}"
+				requiredMessage="#{msgs.required_estimatedcost}" 
+				required="true" />
+		
+				<h:outputLabel 
+					for="maxpax" 
+					value="#{msgs.label_maxpax}" />
+				<p:inputText id="maxpax" 
+				value="#{beanTrip.selectedTrip.maxPax}"
+				placeholder="#{msgs.input_maxpax}"
+				requiredMessage="#{msgs.required_maxpax}" 
+				required="true" />
+		
+				<h:outputLabel for="availablepax" 
+					value="#{msgs.label_availablepax}" />
+				<p:inputText id="availablepax" 
+				value="#{beanTrip.selectedTrip.availablePax}"
+				placeholder="#{msgs.input_availablepax}"
+				requiredMessage="#{msgs.required_availablepax}" 
+				required="true" />
+				<h:outputLabel 
+				for="comments" 
+				value="#{msgs.label_comments}" />
+				<p:inputTextarea id="comments"
+				placeholder="#{msgs.input_comments}" 
+					rows="8" cols="18" maxlength="255"
+					autoResize="false" 
+					value="#{beanTrip.selectedTrip.comments}"  />
+				
+				<h:outputLabel for="closingdate" 
+					value="#{msgs.label_closingdate}" />
+				<p:calendar id="closingdate" 
+					value="#{beanTrip.selectedTrip.closingDate}" 
+						pattern="dd/MM/yyyy HH:mm" 
+						requiredMessage="#{msgs.required_closingdate}" 
+						required="true" />
+				
+				
+				<h:outputText 
+						id="outputRepeats" 
+						value="Repeats: #{beanTrip.numberOfRepeats}"
+						rendered="#{beanTrip.actionTrip == 1}"/>
+				<p:slider 
+						for="hiddenRepeats" 
+						minValue="0" maxValue="15"  
+						displayTemplate="Repeats: {value}" 
+						display="outputRepeats" 
+						rendered="#{beanTrip.actionTrip == 1}"/>
+				<h:outputText 
+						id="outputFrequency" 
+						value="Frequency: #{beanTrip.frequencyRepeat}"
+						rendered="#{beanTrip.actionTrip == 1}"/>				
+				<p:slider 
+						for="hiddenFrequency" 
+						minValue="1" maxValue="31" 
+						displayTemplate="Frequency: {value}" 
+						display="outputFrequency" 
+						rendered="#{beanTrip.actionTrip == 1}"/>
+				<h:inputHidden id="hiddenRepeats" value="#{beanTrip.numberOfRepeats}" />
+				<h:inputHidden id="hiddenFrequency" value="#{beanTrip.frequencyRepeat}" />
+				
+			</h:panelGrid>
+		</p:fieldset>
+	</h:panelGrid>
+</ui:composition>

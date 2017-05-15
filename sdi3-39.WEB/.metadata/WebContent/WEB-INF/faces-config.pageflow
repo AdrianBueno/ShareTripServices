@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14580807215791" configfile="/sdi3-39.Web/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="html/index.xhtml" x="108" y="528" id="pf14659261718200" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14659261718202" path="/html/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="html/list_trips.xhtml" x="396" y="528" id="pf14659261718203" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf146595135107410" inlinks="pf14659261718204" path="/html/list_trips.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" x="264" y="384" id="pf14659261718205" referenceLink="//@navigationRule.4/@fromViewId|" outlinks="pf14659261718202 pf14659261718204 pf14660460187250" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="html/restricted/list_seats.xhtml" x="624" y="528" id="pf146595135107511" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf146595135107410" path="/html/restricted/list_seats.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="html/restricted/trip_action.xhtml" x="532" y="337" id="pf14660460187251" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" inlinks="pf14660460187250" path="/html/restricted/trip_action.xhtml"/>
+  <links id="pf14659261718202" target="pf14659261718200" source="pf14659261718205"/>
+  <links id="pf14659261718204" target="pf14659261718203" source="pf14659261718205"/>
+  <links id="pf146595135107410" target="pf146595135107511" source="pf14659261718203"/>
+  <links id="pf14660460187250" target="pf14660460187251" source="pf14659261718205"/>
+</pageflow:Pageflow>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+	version="2.2">
+	<application>
+	
+		<resource-bundle>
+			<base-name>messages</base-name>
+			<var>msgs</var>
+		</resource-bundle>
+		<locale-config>
+			<default-locale>en</default-locale>
+			<supported-locale>es</supported-locale>
+			<supported-locale>fr</supported-locale>
+		</locale-config>
+	</application>
+	
+	<lifecycle>
+		<phase-listener>com.sdi.presentation.listeners.PhaseListenerImpl</phase-listener>
+	</lifecycle>
+	
+	<navigation-rule>
+		<display-name>*</display-name>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-action>#{beanLogin.logout}</from-action>
+			<from-outcome>logout</from-outcome>
+			<to-view-id>/html/index.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>*</display-name>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>trips</from-outcome>
+			<to-view-id>/html/list_trips.xhtml</to-view-id>
+			<redirect include-view-params="true">
+				<redirect-param>
+					<name>typeTrip</name>
+					<value>#{beanTrips.typeTrip}</value>
+				</redirect-param>
+			</redirect>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>html/list_trips.xhtml</display-name>
+		<from-view-id>/html/list_trips.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>seats</from-outcome>
+			<to-view-id>/html/restricted/list_seats.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>*</display-name>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>trip</from-outcome>
+			<to-view-id>/html/restricted/trip_action.xhtml</to-view-id>
+			<redirect include-view-params="true">
+				<redirect-param>
+					<name>actionTrip</name>
+					<value>#{beanTrip.actionTrip}</value>
+				</redirect-param>
+			</redirect>
+		</navigation-case>
+	</navigation-rule>
+	
+
+
+	<!-- Managed Beans -->
+
+	<!-- Validators -->
+	<validator>
+		<validator-id>vPasswordEqual</validator-id>
+		<validator-class>com.sdi.presentation.validator.EqualPasswordValidator</validator-class>
+	</validator>
+</faces-config>

@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+		<h:form id="viewapplies_form">
+			<p:dataTable id="dataTableApplies" value="#{beanSeats.seats}" var="seat"
+				selection="#{beanSeats.selectedSeats}" rowKey="#{seat.hashCode()}"
+				filteredValue="#{beanSeats.filteredSeats}"
+				sortMode="multiple"
+				paginator="true" rows="8" rowsPerPageTemplate="6,12,18" 
+				paginatorTemplate=" {PreviousPageLink} {PageLinks} {NextPageLink} {RowsPerPageDropdown}"
+				style="width: 1360px; margin: 0 auto;" rendered="#{beanSession.sessionInit}">
+						<p:column selectionMode="multiple"
+								  rendered="#{beanSession.isSessionInit()}"	    
+								  style="width:16px;text-align:center">
+							<p:rowToggler rendered="#{beanSession.isSessionInit()}" />
+						</p:column>
+						<p:column 	headerText="#{msgs.column_promoter}"
+									sortBy="#{seat.trip.user.name}" >
+								<h:outputText value="#{seat.trip.user.name}" />
+						</p:column>
+						<p:column  	headerText="#{msgs.column_date_dep}"
+									filterBy="#{seat.trip.departureDate}"
+									sortBy="#{seat.trip.departureDate}">
+							<h:outputText value="#{seat.trip.getFechaSalida()}" style="float: right;"/>
+						</p:column>
+						<p:column 	headerText="#{msgs.column_city_dep}"
+									filterBy="#{seat.trip.departureAddress.city}"
+									sortBy="#{seat.trip.departureAddress.city}">
+							<h:outputText value="#{seat.trip.departureAddress.city}" style="float: left;" />
+						</p:column>
+						<p:column  	headerText="#{msgs.column_date_dep}"
+									filterBy="#{seat.trip.arrivalDate}"
+									sortBy="#{seat.trip.arrivalDate}">
+							<h:outputText value="#{seat.trip.getFechaLlegada()}" style="float: right;" />
+						</p:column>
+						<p:column 	headerText="#{msgs.column_city_dep}"
+									filterBy="#{seat.trip.destinationAddress.city}"
+									sortBy="#{seat.trip.destinationAddress.city}">
+							<h:outputText value="#{seat.trip.destinationAddress.city}" style="float: left;" />
+						</p:column>
+			
+						<p:column 	headerText="#{msgs.column_places}">
+							<h:outputText value="#{msgs.label_estimatedcost} #{seat.trip.estimatedCost} €" />
+							<br/>
+							<h:outputText value="#{msgs.label_availablepax} #{seat.trip.availablePax}" />				
+						</p:column>
+						<p:column 	headerText="#{msgs.column_trip_status}" >
+							<h:outputText value="#{seat.trip.status}" />
+						</p:column>
+						<p:column 	headerText="#{msgs.column_apply_status}" >
+							<h:outputText value="#{seat.status}" />
+						</p:column>
+				<p:rowExpansion rendered="#{beanSession.isSessionInit()}" >
+					<p:panelGrid>
+						<f:facet name="header">
+							<p:row>
+								<p:column colspan="26">Details</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="4">
+									<h:outputText value="#{msg.column_control}"/>
+								</p:column>
+								<p:column colspan="3"></p:column>
+								<p:column colspan="5">
+									<h:outputText value="#{msg.column_data}"/>
+								</p:column>
+								<p:column colspan="2"></p:column>
+								<p:column colspan="2"></p:column>
+								<p:column colspan="5"><h:outputText value="#{msgs.column_departure}"/></p:column>
+								<p:column colspan="5"><h:outputText value="#{msgs.column_destination}"/></p:column>
+							</p:row>
+						</f:facet>
+						<p:row>
+							<p:column colspan="4" rowspan="7" >
+								<p:panel columns="1" style="width: 10em;">
+									<p:commandButton
+										action="#{beanSeat.cancelPlace()}" 
+										id="buttoncancelplace"
+										value="#{msgs.button_cancel_place}"
+										rendered="#{seat.isPosibleCancel()}"
+										ajax="false">
+										<f:setPropertyActionListener 
+											target="#{beanTrip.selectedTrip}" 
+											value="#{seat.trip}"/>
+									</p:commandButton>
+									<h:outputText value="#{msgs.label_state_apply}" />
+									<h:outputText value="#{seat.status}" />
+								</p:panel>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="3">
+								<h:outputText value="#{msgs.column_promoter}" />
+							</p:column>
+							<p:column colspan="5">
+								<h:outputText value="#{seat.trip.user.name}" />
+							</p:column>
+							<p:column colspan="2" rowspan="6">
+								<p:spacer height="0"/>
+							</p:column>
+							<p:column colspan="2">
+								<h:outputText value="#{msgs.label_date}" />
+							</p:column>
+							<p:column colspan="5">
+								<h:outputText value="#{seat.trip.departureDate}" />
+							</p:column>
+							<p:column colspan="5">
+								<h:outputText value="#{seat.trip.arrivalDate}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="3">
+								<h:outputText value="#{msgs.label_closingdate}" />
+							</p:column>
+							<p:column colspan="5">
+								<h:outputText value="#{seat.trip.closingDate}" />
+							</p:column>
+							<p:column colspan="2">
+								<h:outputText value="#{msgs.label_country}"/>
+							</p:column>
+							<p:column colspan="5">
+								<h:outputText value="#{seat.trip.departureAddress.country}" />
+							</p:column>
+							<p:column colspan="5">
+								<h:outputText value="#{seat.trip.destinationAddress.country}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="3">
+								<h:outputText value="#{msgs.label_maxpax}" />
+							</p:column>
+							<p:column colspan="5">
+								<h:outputText value="#{seat.trip.maxPax}" />
+							</p:column>
+							<p:column colspan="2">
+								<h:outputText value="#{msgs.label_state}"/>
+							</p:column>
+							<p:column colspan="5">
+								<h:outputText value="#{seat.trip.departureAddress.state}" />
+							</p:column>
+							<p:column colspan="5">
+								<h:outputText value="#{seat.trip.destinationAddress.state}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="3">
+								<h:outputText value="#{msgs.label_availablepax}" />
+							</p:column>
+							<p:column colspan="5">
+								<h:outputText value="#{seat.trip.availablePax}" />
+							</p:column>
+							<p:column colspan="2">
+								<h:outputText value="#{msgs.label_city}"/>
+							</p:column>
+							<p:column colspan="5">
+								<h:outputText value="#{seat.trip.departureAddress.city}" />
+							</p:column>
+							<p:column colspan="5">
+								<h:outputText value="#{seat.trip.destinationAddress.city}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="3">
+								<h:outputText value="#{msgs.label_estimatedcost}" />
+							</p:column>
+							<p:column colspan="5">
+								<h:outputText value="#{seat.trip.estimatedCost}" />
+							</p:column>
+							<p:column colspan="2">
+								<h:outputText value="#{msgs.label_address}"/>
+							</p:column>
+							<p:column colspan="5">
+								<h:outputText value="#{seat.trip.departureAddress.address}" />
+							</p:column>
+							<p:column colspan="5">
+								<h:outputText value="#{seat.trip.destinationAddress.address}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="3">
+							</p:column>
+							<p:column colspan="5">			
+							</p:column>
+							<p:column colspan="2">
+								<h:outputText value="#{msgs.label_zipcode}"/>
+							</p:column>
+							<p:column colspan="5">
+								<h:outputText value="#{seat.trip.departureAddress.zipCode}" />
+							</p:column>
+							<p:column colspan="5">
+								<h:outputText value="#{seat.trip.destinationAddress.zipCode}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="2">
+								<h:outputText value="#{msgs.label_comments}"/>
+							</p:column>
+							<p:column colspan="24" rowspan="2">
+								<h:outputText value="#{seat.trip.comments}" />	
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="26">
+								
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:rowExpansion>
+			</p:dataTable>
+		</h:form>
+</ui:composition>

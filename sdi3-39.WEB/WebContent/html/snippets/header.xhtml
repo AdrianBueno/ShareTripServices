@@ -1,0 +1,95 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form id="formheader">
+		<p:layout>
+			<p:layoutUnit position="center" style="height: 50px;">
+				<p:panelGrid columns="6">
+					<h:commandButton id="linklogin" 
+						value="#{msgs.link_login}"
+						rendered="#{beanSession.isSessionOut()}" 
+						action="#{beanLogin.logout}" />
+			
+					<h:commandLink id="linktrips" 
+						value="#{msgs.link_trips}"
+						action="trips">
+						 <f:setPropertyActionListener target="#{beanTrips.typeTrip}" value="1" />
+					</h:commandLink>
+					 <h:commandLink
+					 	id="linkmytrips" 
+					 	value="#{msgs.link_mytrips}"  
+						rendered="#{beanSession.isSessionInit()}"
+						action="trips">
+						<f:setPropertyActionListener target="#{beanTrips.typeTrip}" value="2" />
+					</h:commandLink>
+						
+					<h:commandLink
+						id="linkdonetrips" 
+						value="#{msgs.link_donetrips}"
+						rendered="#{beanSession.isSessionInit()}"
+						action="trips">
+						<f:setPropertyActionListener target="#{beanTrips.typeTrip}" value="3" />
+					</h:commandLink>
+						
+					<h:commandLink 
+						id="linkapplytrips"
+						value="#{msgs.link_applytrips}"
+						rendered="#{beanSession.isSessionInit()}"
+						action="trips">
+						<f:setPropertyActionListener target="#{beanTrips.typeTrip}" value="4" />
+					</h:commandLink>
+					
+					<h:commandLink 
+						id="linkinvolvedtrips"
+						value="Involvedtrips"
+						rendered="#{beanSession.isSessionInit()}"
+						action="trips">
+						<f:setPropertyActionListener target="#{beanTrips.typeTrip}" value="5" />
+					</h:commandLink>
+					
+					<h:commandLink
+						id="linkregistertrip" 
+						value="#{msgs.link_registertrip}" 
+						actionListener="#{beanTrip.blankTrip}"
+						rendered="#{beanSession.isSessionInit()}"
+						action="trip">
+							<f:setPropertyActionListener target="#{beanTrip.actionTrip}" value="1" />
+					</h:commandLink>
+																
+					<h:commandLink
+						id="linklogout" 
+						value="#{msgs.link_logoff}" 
+						rendered="#{beanSession.isSessionInit()}"
+						action="#{beanLogin.logout}">
+						<f:setPropertyActionListener target="#{beanTrips.typeTrip}" value="0" />
+					</h:commandLink>
+					<h:commandLink
+						id="linkreset" 
+						value="Resetear Base de datos"
+						actionListener="#{settings.resetDataBase()}"
+						action="#{beanLogin.logout}">
+					</h:commandLink>
+
+				</p:panelGrid>
+			</p:layoutUnit>
+			<p:layoutUnit position="east">
+
+				<h:form id="language_form">
+					<h:panelGrid columns="2">
+						<h:selectOneMenu 
+							id="selectLanguage"  
+							value="#{settings.selected}"
+							 onchange="submit()"> 
+							<f:selectItems 
+							value="#{settings.localeNames}" />
+						</h:selectOneMenu>
+					</h:panelGrid>
+				</h:form>
+			</p:layoutUnit>
+		</p:layout>
+	</h:form>
+
+
+</ui:composition>

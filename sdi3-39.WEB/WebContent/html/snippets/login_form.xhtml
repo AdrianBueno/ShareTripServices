@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" >
+
+	<p:fieldset legend="#{msgs.fieldset_login}" 
+		style="text-align: center;width:160px;margin-top:30px; margin: 0 auto;">
+		<h:form id="login_form">
+			<h:panelGrid columns="2" >
+				<h:outputLabel 
+					for="userlogin" 
+					value="#{msgs.label_userlogin}" />
+				<p:inputText 
+					id="userlogin" 
+					value="#{beanLogin.login}"
+				 	placeholder="#{msgs.input_userlogin}"
+					required="true" 
+					requiredMessage="#{msgs.required_userlogin}"
+					label="userlogin">
+				</p:inputText>
+				<h:outputLabel 
+					for="userpass" 
+					value="#{msgs.label_userpass}" />
+				<p:password 
+					id="userpass" 
+					value="#{beanLogin.pass}"
+					placeholder="#{msgs.input_userpass}"
+					required="true" 
+					requiredMessage="#{msgs.required_userpass}"
+					label="userpass">
+				</p:password>
+			</h:panelGrid>
+			<h:panelGrid columns="1">
+				<h:commandButton 
+					id="buttonlogin" 
+					value="#{msgs.button_login}"
+					action="#{beanLogin.dologin}">
+					<f:setPropertyActionListener target="#{beanTrips.typeTrip}" value="1" />
+				</h:commandButton>
+			</h:panelGrid>
+		</h:form>
+	</p:fieldset>
+</ui:composition>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messaging-deployment xmlns="urn:jboss:messaging-deployment:1.0">
+	<hornetq-server>
+		<jms-destinations>
+			<jms-queue name="TripChatQueue">
+				<entry name="queue/TripChatQueue" />
+				<entry name="java:jboss/exported/jms/queue/TripChatQueue" />
+				<durable>true</durable>
+			</jms-queue>
+			<jms-queue name="TripChatClientQueue">
+				<entry name="queue/TripChatClientQueue" />
+				<entry name="java:jboss/exported/jms/queue/TripChatClientQueue" />
+				<durable>true</durable>
+			</jms-queue>
+			<jms-queue name="TripChatLogQueue">
+				<entry name="queue/TripChatClientQueue" />
+				<entry name="java:jboss/exported/jms/queue/TripChatClientQueue" />
+			</jms-queue>
+			
+			<jms-topic name="TripChatTopic">
+				<entry name="topic/TripChatTopic" />
+				<entry name="java:jboss/exported/jms/topic/TripChatTopic" />
+			</jms-topic>
+		</jms-destinations>
+	</hornetq-server>
+</messaging-deployment>

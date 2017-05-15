@@ -1,0 +1,54 @@
+Estado de la práctica 2.
+
+
+Registrarse como usuario
+  Completado y probado
+
+Iniciar sesión
+  Completado y probado
+  
+Consultar viajes
+  Implementado y probado
+  Opcionales completados:
+    Filtrado1: Completado
+    Ordenación1: Completado
+    Paginación1: Completado
+    
+Solicitar plaza en un viaje
+  Implementado, No Probado rigurosamente.
+
+Consultar viajes propios (es un caso de uso distinto que como el tio no sabe escribir pone dentro de otro)
+  Implementado y probado
+  Opcionales
+    Filtrado2: completado
+    Ordenación2: completado
+    Paginación2:  completado
+
+Confirmar pasajeros
+  Implementado, faltan pruebas
+
+
+Registrar viaje
+  Completado y probado
+  Opcionales completados:
+    Autocompletado de campos: Completado y probado.
+
+
+Precarga de datos.
+  Completado y probado, (javascript)
+  
+Cancelación de viajes.
+  Implementado, faltan pruebas
+
+
+Cerrar sesión
+  Completado y probado.
+  
+  
+Pruebas automatizas
+  Nada  
+  
+  
+Mantenimiento de la Base de datos Opcional
+Nada
+

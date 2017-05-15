@@ -1,0 +1,17 @@
+@CHARSET "ISO-8859-1";
+
+.headerclass {
+	border: 2px solid black;
+	max-width: inherit;
+	min-width: 1024px;
+	height: 100px;
+	
+}
+
+.contentclass{
+	border: 2px solid black;
+	margin-top: 5px;
+	max-width: inherit;
+	min-width: 1024px;
+
+}

@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/html/templates/general.xhtml">
+
+	<ui:define name="body">
+		<p:panel style=" width: 1200px; margin: 0 auto;">
+			<h1>Debug Page</h1>
+			<h2>Error Handling on Java JSF2</h2>
+			<br />  
+			<h:outputText value="Error Code: #{beanErrorHandler.statusCode}"></h:outputText>
+			<br />
+			<h:outputText value="Error Desscription: #{beanErrorHandler.message}"></h:outputText>
+			<br />
+			<br />
+			<br />
+			<h:outputText value="Request URI : #{beanErrorHandler.requestURI}"></h:outputText>
+		</p:panel>
+	</ui:define>
+</ui:composition>
